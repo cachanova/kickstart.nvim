@@ -20,3 +20,23 @@ map('n', '<leader>w', ':w!<CR>')
 map('n', '<leader>Q', ':qa!<CR>')
 map('n', '<leader>x', ':w<CR>:bd<CR>')
 map('n', '<leader>q', ':bd<CR>')
+
+map('n', '<C-l>', '<C-w>l')
+map('n', '<C-h>', '<C-w>h')
+map('n', '<C-j>', '<C-w>j')
+map('n', '<C-k>', '<C-w>k')
+
+-- Vertical splits
+map('n', '<leader>V', ':rightbelow vsplit<CR>', { desc = 'Vsplit same file' })
+map('n', '<leader>v', function()
+  vim.cmd('rightbelow vsplit')
+  require('telescope.builtin').find_files()
+end, { desc = 'Vsplit with Telescope' })
+
+-- Horizontal splits
+map('n', '<leader>H', ':rightbelow split<CR>', { desc = 'Hsplit same file' })
+map('n', '<leader>h', function()
+  vim.cmd('rightbelow split')
+  require('telescope.builtin').find_files()
+end, { desc = 'Hsplit with Telescope' })
+

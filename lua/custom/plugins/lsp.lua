@@ -31,7 +31,7 @@ return {
             { 'mason-org/mason.nvim', opts = {} },
             'mason-org/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
-            { 'j-hui/fidget.nvim',    opts = {} },
+            { 'j-hui/fidget.nvim', opts = {} },
             'saghen/blink.cmp',
         },
         opts = {
@@ -50,13 +50,10 @@ return {
                     },
                 },
 
-                svlangserver = {
-                    settings = {
-                        systemverilog = {
-                            launchConfiguration =
-                            "verilator --sv --lint-only --Wall --Wno-link -Wno-fatal **/*.svh **/*.vh **/*_pkg.sv **/*.v **/*.sv",
-                        }
-                    }
+                svlangserver = {},
+
+                rust_analyzer = {
+                    root_markers = { 'Cargo.toml' },
                 },
 
                 pyright = {},
@@ -65,6 +62,14 @@ return {
 
         config = function(_, opts)
             local telescope = require('telescope.builtin')
+            local pax = require('pax')
+
+            -- Merge pax-specific server overrides
+            for server, pax_config in pairs(pax.servers) do
+                opts.servers[server] = vim.tbl_deep_extend('force', opts.servers[server] or {}, pax_config)
+            end
+
+            pax.setup()
 
             vim.lsp.config('*', {
                 capabilities = {

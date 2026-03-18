@@ -45,6 +45,12 @@ vim.api.nvim_create_autocmd(
   }
 )
 
+vim.api.nvim_create_autocmd('VimResized', {
+  desc = "Resize splits proportionally when window is resized",
+  group = vim.api.nvim_create_augroup('auto-resize-splits', { clear = true }),
+  command = 'wincmd =',
+})
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = "Highlight when copying text",
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -52,3 +58,4 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end
 })
+

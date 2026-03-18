@@ -1,1 +1,0 @@
-/home/leela/.config/omarchy/current/theme/neovim.lua

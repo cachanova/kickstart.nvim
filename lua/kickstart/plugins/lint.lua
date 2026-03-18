@@ -7,7 +7,19 @@ return {
       local lint = require 'lint'
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
+        verilog = { 'verilator' },
+        systemverilog = { 'verilator' },
       }
+
+      -- Override as a factory function so args are computed per-buffer
+      -- (nvim-lint calls linter() when type == "function")
+      local verilator_base = lint.linters.verilator
+      lint.linters.verilator = function()
+        local pax = require('pax')
+        local args = vim.list_extend({}, verilator_base.args)
+        vim.list_extend(args, pax.verilator_include_args())
+        return vim.tbl_extend('force', verilator_base, { args = args })
+      end
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
       -- instead set linters_by_ft like this:
